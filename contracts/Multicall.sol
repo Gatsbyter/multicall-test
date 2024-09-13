@@ -10,7 +10,7 @@ contract Multicall {
     function aggregate(Call[] calldata calls) public returns (bytes[] memory returnData) {
         returnData = new bytes[](calls.length);
         for (uint256 i = 0; i < calls.length; i++) {
-            (bool success, bytes memory ret) = calls[i].target.call(abi.encodePacked(calls[i].callData, msg.sender));
+            (bool success, bytes memory ret) = calls[i].target.delegatecall(abi.encodePacked(calls[i].callData, msg.sender));
             require(success);
             returnData[i] = ret;
         }

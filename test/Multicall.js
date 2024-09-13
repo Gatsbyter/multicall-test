@@ -15,6 +15,10 @@ describe("multicall", function () {
         console.log('airdrop', airdrop.address)
         console.log('multicall', multicall.address)
 
+        await airdrop.setWhitelist(caller.address)
+
+        await airdrop.airdrop()
+
         await multicall.aggregate([{
             target: airdrop.address,
             callData: Airdrop.interface.encodeFunctionData("airdrop"),
